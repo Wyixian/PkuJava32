@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # PkuJava32
 Pku java homework
 <html>
@@ -5,3 +6,6 @@ Pku java homework
 <p>组员：程权    学号：1501210890  题目分配：58、8、118、119</p>
 <p>组员：林雄辉  学号：1501210381  题目分配：67、191、75</p>
 </html>
+=======
+# PkuJava32 
+>>>>>>> 7d3d5edd5fd80c820ec138faf5455ef3203c39e6
