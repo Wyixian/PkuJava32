@@ -3,116 +3,161 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
-//ÎÄ¼şÑùÀı£º
-//	ÎÄ¼ş1£º
-//		apple apple boy candy candy 
-//		daily even even fill give 
-//	ÎÄ¼ş2£º
-//		boy boy candy candy daily 
-//		give hello ill juice juice 
-//		kill leave mom 
-//Êä³ö½á¹ûÎª£º
-//	Á½¸öÎÄ¼ş×Ü¹²µÄ´Ê»ã±í(¼´ËùÓĞ²»ÖØ¸´µÄµ¥´Ê):
-//	ill give fill kill daily mom hello leave candy apple juice even boy 
-//	Í¬Ê±³öÏÖÔÚÁ½¸öÎÄ¼şÖĞµÄ½»¼¯µ¥´Ê´Ê»ã±íÎª:boy  candy  daily  give 
-//	ÎÄ¼ş1°üº¬µÄµ¥´Ê×ÜÊıÎª£º10
-//	ÎÄ¼ş2°üº¬µÄµ¥´Ê×ÜÊıÎª£º13
-
-//1.¶ÁÈ¡Á½¸ö²»Í¬µÄÎÄ±¾ÎÄ¼ş,Êä³öÁ½¸öÎÄ¼ş×Ü¹²µÄ´Ê»ã±í(¼´ËùÓĞ²»ÖØ¸´µÄµ¥´Ê)
-//2.½øÒ»²½¼ÆËãÍ¬Ê±³öÏÖÔÚÁ½¸öÎÄ¼şÖĞµÄ½»¼¯µ¥´Ê´Ê»ã±í¡£
-//3.Í³¼ÆÉÏÊöÁ½¸öÎÄ¼ş´Ê»ã±íÖĞ¸÷×Ô°üº¬µ¥´Ê×ÜÊı¡£
+//1.æ±‚ä¸¤ä¸ªæ–‡ä»¶å•è¯çš„å¹¶é›†ï¼›
+//2.æ±‚ä¸¤ä¸ªæ–‡ä»¶å•è¯çš„äº¤é›†ï¼›
+//3.å‡è®¾å•è¯wdï¼Œæ–‡ä»¶Aï¼Œæ–‡ä»¶B,æ±‚Aï¼ŒBæ–‡ä»¶ä¸­å„è‡ªå•è¯æ€»æ•°ï¼Œ
+//		wdâˆˆAä¸”wdâˆ‰Bçš„å•è¯å Aæ–‡ä»¶çš„ç™¾åˆ†æ¯”å’ŒwdâˆˆBä¸”wdâˆ‰Açš„å•è¯å Bæ–‡ä»¶çš„ç™¾åˆ†æ¯”ã€‚
 public class Vocabulary {
-		 //¶ÁÈ¡Á½¸ö²»Í¬µÄÎÄ±¾ÎÄ¼ş
-		 public static String readTxtFile(String filePath){
-             String lineTxt = "";
-		        try {
-		        	String encoding="GBK";
-		            File file=new File(filePath);
-		            if(file.isFile() && file.exists()){
-		            	InputStreamReader read = new InputStreamReader(new FileInputStream(file),encoding);
-		                BufferedReader bufferedReader = new BufferedReader(read);
-		                String line = bufferedReader.readLine();
-		                while(line != null){
-		                    lineTxt = lineTxt + line;
-		                    line = bufferedReader.readLine();
-		                }
-		                read.close();
-		            }else{
-		                System.out.println("ÕÒ²»µ½Ö¸¶¨µÄÎÄ¼ş");
-		            }
-		        } catch (Exception e) {
-		        	System.out.println("¶ÁÈ¡ÎÄ¼şÄÚÈİ³ö´í");
-		        	e.printStackTrace();
-		        }
-		     return lineTxt;
-		 }
-		 
-		 //1.Êä³öÁ½¸öÎÄ¼ş×Ü¹²µÄ´Ê»ã±í(¼´ËùÓĞ²»ÖØ¸´µÄµ¥´Ê)
-		 public HashSet vocabularyNoRepeat(String lineTxt){
-			//ÓÃÓÚ´æ´¢×Ü¹²µÄ´Ê»ã±í£¬¼´²»ÖØ¸´µÄµ¥´Ê
-			HashSet hash = new HashSet();
-	        //ÒÔ¿Õ°×·û·Ö¸î×Ö·û´®
-        	for(int i=0;i<lineTxt.split(" ").length;i++){
-            	//½«ÎÄ¼şÄÚµÄµ¥´Ê´æÈëHashSetÖĞ£¬ÀûÓÃÆä²»¿ÉÖØ¸´ĞÔ£¬»ñµÃ²»ÖØ¸´µÄµ¥´Ê
-            	hash.add(lineTxt.split(" ")[i]);
-        	}             
-			 System.out.println("Á½¸öÎÄ¼ş×Ü¹²µÄ´Ê»ã±í(¼´ËùÓĞ²»ÖØ¸´µÄµ¥´Ê):");
-			 Iterator it =hash.iterator();
-			 while(it.hasNext()){
-				 System.out.print(it.next() + " ");
-			 }
-			 System.out.println();
-			 return hash;
-		 }
-		 
-		//2.½øÒ»²½¼ÆËãÍ¬Ê±³öÏÖÔÚÁ½¸öÎÄ¼şÖĞµÄ½»¼¯µ¥´Ê´Ê»ã±í
-		 public void countBoth(String lineTxt1,String lineTxt2){
-			 HashSet hash = new HashSet();
-	         for(int i=0;i<lineTxt1.split(" ").length;i++){
-	        	 hash.add(lineTxt1.split(" ")[i]);
-	         }
-	         ArrayList list = new ArrayList();
-			 for(int i=0;i<lineTxt2.split(" ").length;i++){
-				 if(hash.contains(lineTxt2.split(" ")[i])){
-					 list.add(lineTxt2.split(" ")[i]+" ");
-				 }
-			 }			 
-			 Collections.sort(list);
-			 System.out.print("Í¬Ê±³öÏÖÔÚÁ½¸öÎÄ¼şÖĞµÄ½»¼¯µ¥´Ê´Ê»ã±íÎª:");
-			 for(int i=0;i<list.size()-1;i++){
-				 if(!list.get(i).equals(list.get(i+1))){
-					 //list.remove(i);
-					 System.out.print(list.get(i)+" ");
-				 }
-			 }
-			 System.out.println(list.get(list.size()-1));
-			 
-		 }
-		     
-		   
-		 public static void main(String argv[]){
-		    //macÏÂÎÄ¼şµÄ¾ø¶ÔÂ·¾¶
-			//¶ÁÈ¡Á½¸ö²»Í¬µÄÎÄ±¾ÎÄ¼ş
-		    String filePath1 ="/Users/wangyixian/PkuJava32/20151112/vocabularyOne.txt";
-		    String filePath2 ="/Users/wangyixian/PkuJava32/20151112/vocabularyTwo.txt";
-		    String lineTxt1 = readTxtFile(filePath1);
-		    String lineTxt2 = readTxtFile(filePath2);
-		    String lineTxt = lineTxt1 + lineTxt2;
-	        Vocabulary v = new Vocabulary();
-	        //1.Êä³öÁ½¸öÎÄ¼ş×Ü¹²µÄ´Ê»ã±í(¼´ËùÓĞ²»ÖØ¸´µÄµ¥´Ê)
-	        HashSet hash = v.vocabularyNoRepeat(lineTxt);
-	        //2.½øÒ»²½¼ÆËãÍ¬Ê±³öÏÖÔÚÁ½¸öÎÄ¼şÖĞµÄ½»¼¯µ¥´Ê´Ê»ã±í
-	        v.countBoth(lineTxt1, lineTxt2);
-	        //3.Í³¼ÆÉÏÊöÁ½¸öÎÄ¼ş´Ê»ã±íÖĞ¸÷×Ô°üº¬µ¥´Ê×ÜÊı
-		    System.out.println("ÎÄ¼ş1°üº¬µÄµ¥´Ê×ÜÊıÎª£º"+ lineTxt1.split(" ").length);
-		    System.out.println("ÎÄ¼ş2°üº¬µÄµ¥´Ê×ÜÊıÎª£º"+ lineTxt2.split(" ").length);
-	        
-		 }
+    //è¯»å–ä¸¤ä¸ªä¸åŒçš„æ–‡æœ¬æ–‡ä»¶
+    public static String readTxtFile(String filePath){
+        String lineTxt = "";
+        try {
+            String encoding="GBK";
+            File file=new File(filePath);
+            if(file.isFile() && file.exists()){
+                InputStreamReader read = new InputStreamReader(new FileInputStream(file),encoding);
+                BufferedReader bufferedReader = new BufferedReader(read);
+                String line = bufferedReader.readLine();
+                while(line != null){
+                    lineTxt = lineTxt + line;
+                    line = bufferedReader.readLine();
+                }
+                read.close();
+            }else{
+                System.out.println("æ‰¾ä¸åˆ°æŒ‡å®šçš„æ–‡ä»¶");
+            }
+        } catch (Exception e) {
+            System.out.println("è¯»å–æ–‡ä»¶å†…å®¹å‡ºé”™");
+            e.printStackTrace();
+        }
+        return lineTxt;
+    }
+    
+    //1.æ±‚ä¸¤ä¸ªæ–‡ä»¶å•è¯çš„å¹¶é›†
+    public void vocabularyUnion(String lineTxt){
+        //ç”¨äºå­˜å‚¨æ€»å…±çš„è¯æ±‡è¡¨ï¼Œå³ä¸é‡å¤çš„å•è¯
+        HashSet hash = new HashSet();
+        //ä»¥ç©ºç™½ç¬¦åˆ†å‰²å­—ç¬¦ä¸²
+        for(int i=0;i<lineTxt.split(" ").length;i++){
+            //å°†æ–‡ä»¶å†…çš„å•è¯å­˜å…¥HashSetä¸­ï¼Œåˆ©ç”¨å…¶ä¸å¯é‡å¤æ€§ï¼Œè·å¾—ä¸é‡å¤çš„å•è¯
+            hash.add(lineTxt.split(" ")[i]);
+        }
+        System.out.println("1.ä¸¤ä¸ªæ–‡ä»¶å•è¯çš„å¹¶é›†:");
+        Iterator it =hash.iterator();
+        while(it.hasNext()){
+            System.out.print(it.next() + " ");
+        }
+        System.out.println();
+    }
+    
+    //2.æ±‚ä¸¤ä¸ªæ–‡ä»¶å•è¯çš„äº¤é›†
+    public void vocabularySimultaneity(String lineTxt1,String lineTxt2){
+        HashSet hash = new HashSet();
+        for(int i=0;i<lineTxt1.split(" ").length;i++){
+            hash.add(lineTxt1.split(" ")[i]);
+        }
+        ArrayList list = new ArrayList();
+        int countBoth = 0;
+        for(int i=0;i<lineTxt2.split(" ").length;i++){
+            if(hash.contains(lineTxt2.split(" ")[i])){
+                countBoth++;
+                list.add(lineTxt2.split(" ")[i]+" ");
+            }
+        }
+        Collections.sort(list);
+        System.out.print("2.ä¸¤ä¸ªæ–‡ä»¶å•è¯çš„äº¤é›†:");
+        for(int i=0;i<list.size()-1;i++){
+            if(!list.get(i).equals(list.get(i+1))){
+                System.out.print(list.get(i)+" ");
+            }
+        }
+        System.out.println(list.get(list.size()-1));
+    }
+    
+    //3.æ±‚Aã€Bæ–‡ä»¶ä¸­å„è‡ªå•è¯æ€»æ•°;wdâˆˆAä¸”wdâˆ‰Bçš„å•è¯å Aæ–‡ä»¶çš„ç™¾åˆ†æ¯”å’ŒwdâˆˆBä¸”wdâˆ‰Açš„å•è¯å Bæ–‡ä»¶çš„ç™¾åˆ†æ¯”
+    public void vocabularyPercentage(String lineTxt1,String lineTxt2){
+        int total1 = lineTxt1.split(" ").length;
+        int total2 = lineTxt2.split(" ").length;
+        System.out.println("æ–‡ä»¶1åŒ…å«çš„å•è¯æ€»æ•°ä¸ºï¼š"+ total1);
+        System.out.println("æ–‡ä»¶2åŒ…å«çš„å•è¯æ€»æ•°ä¸ºï¼š"+ total2);
+        //wdâˆˆAä¸”wdâˆ‰Bçš„å•è¯å Aæ–‡ä»¶çš„ç™¾åˆ†æ¯”
+        HashSet hashB = new HashSet();
+        for(int i=0;i<total2;i++){
+            hashB.add(lineTxt2.split(" ")[i]);
+        }
+        int countOnlyA = 0;
+        for(int i=0;i<total1;i++){
+            if(!hashB.contains(lineTxt1.split(" ")[i])){
+                countOnlyA++;
+            }
+        }
+        double countOnly_A = (double)countOnlyA;
+        double total_1 = (double)total1;
+        NumberFormat formatter = new DecimalFormat("0.00");
+        Double percentageA=new Double(countOnly_A/total_1);
+        String percentage_A = formatter.format(percentageA);
+        System.out.println("wdâˆˆAä¸”wdâˆ‰Bçš„å•è¯å Aæ–‡ä»¶çš„ç™¾åˆ†æ¯”:"+percentage_A);
+        //wdâˆˆBä¸”wdâˆ‰Açš„å•è¯å Bæ–‡ä»¶çš„ç™¾åˆ†æ¯”
+        HashSet hashA = new HashSet();
+        for(int i=0;i<total1;i++){
+            hashA.add(lineTxt1.split(" ")[i]);
+        }
+        int countOnlyB = 0;
+        for(int i=0;i<total2;i++){
+            if(!hashA.contains(lineTxt2.split(" ")[i])){
+                countOnlyB++;
+            }
+        }
+        double countOnly_B = (double)countOnlyB;
+        double total_2 = (double)total2;
+        NumberFormat formatter2 = new DecimalFormat("0.00");
+        Double percentageB=new Double(countOnly_B/total_2);
+        String percentage_B = formatter2.format(percentageB);
+        System.out.println("wdâˆˆBä¸”wdâˆ‰Açš„å•è¯å Bæ–‡ä»¶çš„ç™¾åˆ†æ¯”:"+percentage_B);
+        
+    }
+    
+    
+    
+    public static void main(String[] args){
+        //macä¸‹æ–‡ä»¶çš„ç»å¯¹è·¯å¾„
+        //è¯»å–ä¸¤ä¸ªä¸åŒçš„æ–‡æœ¬æ–‡ä»¶
+        String filePath1 ="/Users/wangyixian/PkuJava32/20151112/vocabularyOne.txt";
+        String filePath2 ="/Users/wangyixian/PkuJava32/20151112/vocabularyTwo.txt";
+        String lineTxt1 = readTxtFile(filePath1);
+        String lineTxt2 = readTxtFile(filePath2);
+        String lineTxt = lineTxt1 + lineTxt2;
+        Vocabulary v = new Vocabulary();
+        //1.æ±‚ä¸¤ä¸ªæ–‡ä»¶å•è¯çš„å¹¶é›†
+        v.vocabularyUnion(lineTxt);
+        //2.æ±‚ä¸¤ä¸ªæ–‡ä»¶å•è¯çš„äº¤é›†
+        v.vocabularySimultaneity(lineTxt1, lineTxt2);
+        //3.æ±‚Aã€Bæ–‡ä»¶ä¸­å„è‡ªå•è¯æ€»æ•°
+        //wdâˆˆAä¸”wdâˆ‰Bçš„å•è¯å Aæ–‡ä»¶çš„ç™¾åˆ†æ¯”å’ŒwdâˆˆBä¸”wdâˆ‰Açš„å•è¯å Bæ–‡ä»¶çš„ç™¾åˆ†æ¯”
+        v.vocabularyPercentage(lineTxt1, lineTxt2);
+        
+    }
 }
+//æ–‡ä»¶æ ·ä¾‹ï¼š
+//æ–‡ä»¶1ï¼š
+//	apple apple boy candy candy
+//	daily even even fill give
+//æ–‡ä»¶2ï¼š
+//	boy boy candy candy daily
+//	give hello ill juice juice 
+//	kill leave mom 
 
+//è¾“å‡ºç»“æœä¸ºï¼š
+//	ä¸¤ä¸ªæ–‡ä»¶æ€»å…±çš„è¯æ±‡è¡¨(å³æ‰€æœ‰ä¸é‡å¤çš„å•è¯):
+//	ill give fill kill daily mom hello leave candy apple juice even boy 
+//	åŒæ—¶å‡ºç°åœ¨ä¸¤ä¸ªæ–‡ä»¶ä¸­çš„äº¤é›†å•è¯è¯æ±‡è¡¨ä¸º:boy  candy  daily  give 
+//	æ–‡ä»¶1åŒ…å«çš„å•è¯æ€»æ•°ä¸ºï¼š10
+//	æ–‡ä»¶2åŒ…å«çš„å•è¯æ€»æ•°ä¸ºï¼š13
 
