@@ -43,7 +43,6 @@ abstract class SearchEngine
 	 */
 	SearchEngine(int n, int depth)
 	{
-System.out.println("3 ");
 		gridNum = n;
 		maxDepth = depth;
 		//评估棋盘
@@ -64,7 +63,6 @@ System.out.println("3 ");
 	 */
 	void makeMove(ChessPos move, String c)
 	{
-		System.out.println("16");
 		CurPosition[move.x][move.y] = c;
 	}
 	
@@ -77,7 +75,6 @@ System.out.println("3 ");
 	 */
 	void unMakeMove(ChessPos move)
 	{
-		System.out.println("17");
 		CurPosition[move.x][move.y] = Chessman.EMPTY.getChessman();		
 	}
 	
@@ -101,7 +98,6 @@ class MoveGenerator
 	 */
 	MoveGenerator(int n)
 	{
-System.out.println("5 ");
 		size = n;		
 		moveList = new ChessPos[5][n * n];
 		for(int i = 0; i < 5; i++)
@@ -121,7 +117,6 @@ System.out.println("5 ");
 	 */
 	int createPossibleMove(String[][] board, int depth)
 	{
-		System.out.println("15 ");
 		int	i,j;
 		moveCount = 0;
 		for (i = 0; i < size; i++)
@@ -161,7 +156,6 @@ class AlphaBetaEngine extends SearchEngine
 	 */
 	void searchAGoodMove(String board[][], String c)
 	{
-System.out.println("9 ");
 		//记录当前棋盘情况
 		for(int i = 0; i < gridNum; i++)
 			for(int j = 0; j < gridNum; j++)
@@ -192,7 +186,6 @@ System.out.println("9 ");
 	 */
 	int AB(int depth, int alpha, int beta, boolean isWhiteTurn)
 	{
-System.out.println(" 10");
 		int Count,i;
 		int score;
 		String chessMan;

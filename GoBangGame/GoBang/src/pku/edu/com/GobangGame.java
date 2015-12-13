@@ -36,7 +36,7 @@ public class GobangGame {
 	 *            棋盘类
 	 */
 	public GobangGame(Chessboard chessboard) {
-System.out.println("5.1 ");
+
 		this.chessboard = chessboard;
 	}
 
@@ -80,7 +80,6 @@ System.out.println("5.1 ");
 	 * 开始下棋
 	 */
 	public void start() throws Exception {
-		System.out.println("7 ");
 		// true为游戏结束
 		boolean isOver = false;
 		chessboard.initBoard();
@@ -159,7 +158,6 @@ System.out.println("5.1 ");
 	 * 				计算机落子的颜色
 	 */
 	public int[] computerDo(String[][] board,String chessman) {
-		System.out.println(" 8");
 		//搜索最佳落子位置
 		engine.searchAGoodMove(board, chessman);
 		//取出最佳落子位置
@@ -375,9 +373,8 @@ System.out.println("5.1 ");
 	}
 
 	public static void main(String[] args) throws Exception {
-System.out.println("1 ");
+
 		GobangGame gb = new GobangGame(new Chessboard());
-System.out.println(" 6");
 		gb.start();
 		
 	}

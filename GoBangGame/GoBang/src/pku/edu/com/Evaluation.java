@@ -34,7 +34,6 @@ class Evaluation
 	 */
 	Evaluation(int mapSize)
 	{
-System.out.println("4 ");
 		size = mapSize;
 		posValue = new int[mapSize][mapSize];
 		int edge = size - 1;
@@ -60,7 +59,6 @@ System.out.println("4 ");
 	 */
 	int evaluate(String[][] board, boolean isWhiteTurn)
 	{
-		System.out.println(" 11");
 		for(int i = 0; i < 8; i++)
 		{	
 			blackTypeCount[i] = 0;
@@ -247,7 +245,6 @@ System.out.println("4 ");
 	 */
 	void analysisBoard(String[][] board)
 	{
-		System.out.println(" 12");
 		String[] line = new String[size];
 		
 		//水平方向分析
